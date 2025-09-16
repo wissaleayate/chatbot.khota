@@ -3,10 +3,11 @@ import fitz
 import requests
 
 # === CONFIG ===
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 MODEL = "openai/gpt-3.5-turbo"  
 FAQ = {
     "hello": "👋 Hello! How can I help you today?",
+    "hello there": "👋 Hello! How can I help you today?",
     "who are you": "I'm an AI assistant made with Python and Streamlit by Wissale!",
     "how to upload file": "Click the 'Upload a PDF or TXT file' button above to add your file.",
     "bye": "Goodbye 👋, see you soon!"}
@@ -40,7 +41,15 @@ def ask_question(context, question):
     }
 
     response = requests.post("https://openrouter.ai/api/v1/chat/completions", headers=headers, json=data)
-    return response.json()["choices"][0]["message"]["content"]
+    result = response.json()
+    print(result)  # يخرجلك الرد كامل من API
+
+    if "choices" in result:
+        return result["choices"][0]["message"]["content"]
+    elif "error" in result:
+        return f"⚠️ API Error: {result['error'].get('message', 'Unknown error')}"
+    else:
+        return f"⚠️ Unexpected API response: {result}"
 
 # === STREAMLIT UI ===
 st.set_page_config(page_title="AI File Q&A Chat")
