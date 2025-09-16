@@ -3,7 +3,7 @@ import fitz
 import requests
 
 # === CONFIG ===
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = "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"
 MODEL = "deepseek/deepseek-r1:free"  
 
 # === FUNCTIONS ===
