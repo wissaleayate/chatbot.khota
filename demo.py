@@ -3,8 +3,13 @@ import fitz
 import requests
 
 # === CONFIG ===
-OPENROUTER_API_KEY = "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"
-MODEL = "deepseek/deepseek-r1:free"  
+OPENROUTER_API_KEY = "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"
+MODEL = "openai/gpt-3.5-turbo"  
+FAQ = {
+    "hello": "👋 Hello! How can I help you today?",
+    "who are you": "I'm an AI assistant made with Python and Streamlit by Wissale!",
+    "how to upload file": "Click the 'Upload a PDF or TXT file' button above to add your file.",
+    "bye": "Goodbye 👋, see you soon!"}
 
 # === FUNCTIONS ===
 def extract_text(file):
@@ -15,6 +20,11 @@ def extract_text(file):
         return file.read().decode("utf-8")
 
 def ask_question(context, question):
+
+    q_lower = question.lower().strip()
+    if q_lower in FAQ:
+        return FAQ[q_lower]
+
     headers = {
         "Authorization": f"Bearer {OPENROUTER_API_KEY}",
         "HTTP-Referer": "https://your-app.com",
