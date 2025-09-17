@@ -1,9 +1,9 @@
 import streamlit as st
 import fitz  
 import requests
-
+import os
 # === CONFIG ===
-OPENROUTER_API_KEY = "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"
+OPENROUTER_API_KEY = os.getenv("OPENROUTER_API_KEY")
 MODEL = "openai/gpt-3.5-turbo"  
 FAQ = {
     "hello": "👋 Hello! How can I help you today?",
